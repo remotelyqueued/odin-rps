@@ -83,35 +83,35 @@ function game() {
     }
 }
 
-game();
+// game();
 
 // test: playRound()
-// const rock = 'rock';
-// const paper = 'paper';
-// const scissors = 'scissors';
+const rock = 'rock';
+const paper = 'paper';
+const scissors = 'scissors';
 
-// let result = '';
-// console.log('rock:');
-// test(rock);
-// console.log('paper:');
-// test(paper);
-// console.log('scissors:');
-// test(scissors);
+let result = '';
+console.log('rock:');
+test(rock);
+console.log('paper:');
+test(paper);
+console.log('scissors:');
+test(scissors);
 
-// function test(choice) {
-//     let count = {
-//         player: 0,
-//         computer: 0,
-//         tie: 0,
-//     };
-//     for (let i = 0; i < 10_000_000; i++) {
-//         result = playRound(choice, computerPlay());
-//         count[result]++;
-//     }
-//     for (key in count) {
-//         console.log(key + ': ' + count[key].toLocaleString());
-//     }
-// }
+function test(choice) {
+    let count = {
+        player: 0,
+        computer: 0,
+        tie: 0,
+    };
+    for (let i = 0; i < 10_000_000; i++) {
+        result = playRound(choice, computerPlay());
+        count[result]++;
+    }
+    for (key in count) {
+        console.log(key + ': ' + count[key].toLocaleString());
+    }
+}
 
 // test: computerPlay()
 // let count = {
