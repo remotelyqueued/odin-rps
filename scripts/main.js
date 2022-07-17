@@ -56,7 +56,7 @@ document.querySelectorAll('button').forEach(button =>
         document.querySelector('div').textContent = outcome;
         results[outcome]++;
         button.dispatchEvent(
-            new CustomEvent(`${outcome}`, { bubbles: true, cancelable: true })
+            new CustomEvent(`${outcome}`, { bubbles: true })
         );
     })
 );
