@@ -1,10 +1,9 @@
 // main.js
 
-/* randomly return: rock, paper, scissors */
 function computerPlay() {
     return ['rock', 'paper', 'scissors'].at(Math.floor(Math.random() * 3));
 }
-/* takes two strings, returns string */
+
 function playRound(playerSelection, computerSelection) {
     switch (playerSelection.toLowerCase()) {
         case 'rock':
@@ -38,94 +37,42 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    let playerWins = 0;
-    let computerWins = 0;
-    let tieGame = 0;
+function reset() {
+    results.computer = 0;
+    results.player = 0;
+    results.tie = 0;
+}
 
-    for (let i = 0; i < 5; i++) {
-        let result = playRound(
-            prompt('Choose paper rock or scissors:', 'rock'),
-            computerPlay()
+const results = {
+    computer: 0,
+    player: 0,
+    tie: 0,
+};
+
+// each button click plays round -> updates based on outcome -> dispatch event
+document.querySelectorAll('button').forEach(button =>
+    button.addEventListener('click', event => {
+        const outcome = playRound(event.target.textContent, computerPlay());
+        document.querySelector('div').textContent = outcome;
+        results[outcome]++;
+        button.dispatchEvent(
+            new CustomEvent(`${outcome}`, { bubbles: true, cancelable: true })
         );
-        switch (result) {
-            case 'computer':
-                console.log('Computer won!');
-                computerWins++;
-                break;
-            case 'player':
-                console.log('Player won!');
-                playerWins++;
-                break;
-            case 'tie':
-                console.log('A tie!');
-                tieGame++;
-                break;
-            default:
-                console.log('Invalid info I think!');
-        }
+    })
+);
+
+document.addEventListener('player', event => {
+    if (results.player == 5) {
+        alert('You won!');
+        reset();
     }
-    if (playerWins > computerWins) {
-        console.log('\nFinal score:');
-        console.log('player wins:', playerWins);
-        console.log('computer wins:', computerWins);
-        console.log('tie games:', tieGame);
-    } else if (computerWins > playerWins) {
-        console.log('\nFinal score:');
-        console.log('player wins:', playerWins);
-        console.log('computer wins:', computerWins);
-        console.log('tie games:', tieGame);
-    } else {
-        console.log('\nFinal score:');
-        console.log('player wins:', playerWins);
-        console.log('computer wins:', computerWins);
-        console.log('tie games:', tieGame);
+});
+
+document.addEventListener('computer', event => {
+    if (results.computer == 5) {
+        alert('You lost!');
+        reset();
     }
-}
+});
 
-// game();
-
-// test: playRound()
-const rock = 'rock';
-const paper = 'paper';
-const scissors = 'scissors';
-
-let result = '';
-console.log('rock:');
-test(rock);
-console.log('paper:');
-test(paper);
-console.log('scissors:');
-test(scissors);
-
-function test(choice) {
-    let count = {
-        player: 0,
-        computer: 0,
-        tie: 0,
-    };
-    for (let i = 0; i < 10_000_000; i++) {
-        result = playRound(choice, computerPlay());
-        count[result]++;
-    }
-    for (key in count) {
-        console.log(key + ': ' + count[key].toLocaleString());
-    }
-}
-
-// test: computerPlay()
-// let count = {
-//     rock: 0,
-//     paper: 0,
-//     scissors: 0,
-// };
-
-// let result = '';
-// for (let i = 0; i < 10_000_000; i++) {
-//     result = computerPlay();
-//     count[result]++;
-// }
-
-// for (key in count) {
-//     console.log(key + ': ' + count[key].toLocaleString());
-// }
+document.addEventListener('tie', event => {});
