@@ -6,7 +6,8 @@ const results = {
     tie: 0,
 };
 
-const throttle = setThrottle(game, 100);
+const throttleGame = setThrottle(game, 100);
+const throttleTest = setThrottle(test, 5000);
 
 function computerPlay() {
     return ['rock', 'paper', 'scissors'].at(Math.floor(Math.random() * 3));
@@ -64,7 +65,6 @@ function setThrottle(callback, ms) {
     let isThrottled = false;
     let savedArgs;
     let savedThis;
-
     return function wrapper() {
         console.log('3. wrapper called...');
         if (isThrottled) {
@@ -73,9 +73,9 @@ function setThrottle(callback, ms) {
             return;
         }
         isThrottled = true;
-        callback.apply(this, arguments); 
+        callback.apply(this, arguments);
         setTimeout(function () {
-            isThrottled = false; 
+            isThrottled = false;
             if (savedArgs) {
                 wrapper.apply(savedThis, savedArgs);
                 savedArgs = savedThis = null;
@@ -84,12 +84,11 @@ function setThrottle(callback, ms) {
     };
 }
 
-
 // each button click calls throttle() -> wrapper() -> game()
 document.querySelectorAll('button').forEach(button =>
     button.addEventListener('click', event => {
         console.log('2. throttle called...');
-        throttle(button, event);
+        throttleGame(button, event);
     })
 );
 
@@ -112,3 +111,22 @@ document.addEventListener('computer', event => {
 document.addEventListener('tie', event => {
     console.log(results);
 });
+
+function test() {
+    console.log('Test randomness called...');
+    const count = {
+        player: 0,
+        computer: 0,
+        tie: 0,
+    };
+    const choices = ['rock', 'paper', 'scissors'];
+    choices.forEach(option => {
+        for (let i = 0; i < 10_000_000; i++) {
+            const result = playRound(option, computerPlay());
+            count[result]++;
+        }
+    });
+    for (key in count) {
+        console.log(key + ': ' + count[key].toLocaleString());
+    }
+}

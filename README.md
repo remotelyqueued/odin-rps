@@ -27,6 +27,6 @@
 -   branching - merging
 
 todo:
-debounce
-ui design - font, flex, images, sounds?
+ui design - font, flex, images, sound
 airbnb style guide
+modal
