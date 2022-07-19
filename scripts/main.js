@@ -14,7 +14,6 @@ function computerPlay() {
 }
 
 function game(button, event) {
-    console.log('4. game called...');
     const outcome = playRound(event.target.textContent, computerPlay());
     results[outcome]++;
     setPre(outcome);
@@ -58,16 +57,13 @@ function reset() {
     results.computer = 0;
     results.player = 0;
     results.tie = 0;
-    // setPre('results');
 }
 
 function setThrottle(callback, ms) {
-    console.log('1. setThrottle called...');
     let isThrottled = false;
     let savedArgs;
     let savedThis;
     return function wrapper() {
-        console.log('3. wrapper called...');
         if (isThrottled) {
             savedArgs = arguments;
             savedThis = this;
@@ -85,45 +81,41 @@ function setThrottle(callback, ms) {
     };
 }
 
-// each button click calls throttle() -> wrapper() -> game()
+// each button click calls a wrapper around game
 document.querySelectorAll('button').forEach(button =>
     button.addEventListener('click', event => {
-        console.log('2. throttle called...');
         throttleGame(button, event);
     })
 );
 
 document.addEventListener('player', event => {
-    console.log(results);
     if (results.player >= 5) {
-        setPre('You won!');
+        setPre('<span>🤯</span><br/>You won!');
         reset();
     }
 });
 
 document.addEventListener('computer', event => {
-    console.log(results);
     if (results.computer >= 5) {
-        setPre('You lost!');
+        setPre('<span>😭</span><br/>You lost!');
         reset();
     }
 });
 
-document.addEventListener('tie', event => {
-    console.log(results);
-});
+// nothing happens if a tie occurs
+// document.addEventListener('tie', event => {});
 
 function setPre(string) {
-    document.querySelector('pre').textContent = string;
+    document.querySelector('pre').innerHTML = string;
 }
 
 function test() {
-    console.log('Test randomness called...');
     const count = {
         player: 0,
         computer: 0,
         tie: 0,
     };
+    // for each choice play the game 10mil times
     const choices = ['rock', 'paper', 'scissors'];
     choices.forEach(option => {
         for (let i = 0; i < 10_000_000; i++) {
@@ -131,17 +123,18 @@ function test() {
             count[result]++;
         }
     });
-
+    // note: Object.values iterates over all ennumerable properties
     let highScore = Math.max(...Object.values(count));
     let winner = Object.keys(count).find(key => count[key] === highScore);
 
     if (winner === 'tie') {
-        winner = `lol, ${winner} won!...wait wut`;
+        winner = `${winner} won!...wait wut`;
     } else {
         winner = `${winner} won!!!`;
     }
 
     setPre(`
+    <span>🏆</span>
     after 30 million games:
     player: ${count.player.toLocaleString()}
     computer: ${count.computer.toLocaleString()}

@@ -1,52 +1,28 @@
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-}
-
-html {
-    box-sizing: border-box;
+html { 
+    font-family: 'liga_roboto_monoregular';
 }
 
 body {
+    /* neccessary for footer ----------- */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0;
+    /* --------------------------------- */
+    max-width: 950px;
 }
 
 header {
     text-align: center;
-    position: sticky;
-    padding: 2rem;
-    margin: 0;
 }
 
 h1 {
-    font-family: 'Press Start 2P', cursive;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    /* flex: 1 0 auto; */
+    font-family: 'karmatic_arcaderegular';
 }
 
 section {
     display: flex;
-
-    gap: 4px;
     flex-flow: row wrap;
-}
-
-section:nth-child(4) {
-    justify-content: space-between;
-    align-items: center;
-}
-
-label {
-    flex: 1;
+    gap: 4px;
 }
 
 input {
@@ -58,20 +34,44 @@ details {
 }
 
 button {
-    font-family: 'Press Start 2P', cursive;
-    border-radius: 5px;
+    font-family: inherit;
+    font-weight: bold;
     flex: 1;
-    padding: 20px;
+    padding: 3rem;
 }
 
 pre {
     flex: 1;
     text-align: center;
+    /* height: 34rem; */
+    font-size: 1.6rem;
 }
 
 footer {
-    display: flex;
-    justify-content: center;
-    margin-top: auto;
+    text-align: center;
     background: rgb(246, 248, 250);
+    /* 
+    pins footer at bottom of flex container and 
+    expands it to full width of document 
+    */
+    margin: -2rem calc(50% - 50vw);
+    margin-top: auto;
+}
+
+span {
+    display: block;
+    text-align: center;
+    font-size: 4rem;
+    line-height: 4rem;
+    transform: scale(0.5);
+    animation: scaleEmoji 2s infinite alternate;
+}
+
+@keyframes scaleEmoji {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

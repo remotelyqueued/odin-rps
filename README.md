@@ -27,7 +27,6 @@
 -   branching - merging
 
 todo:
-ui design - font, flex, images, sound
+ui design (scale, footer)
+restart button after win (modal?)
 airbnb style guide
-modal
-input 3 - 100,000,000 games
