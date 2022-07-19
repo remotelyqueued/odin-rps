@@ -1,79 +1,38 @@
-html {
-    box-sizing: border-box;
-    font-size: 10px;
-    font-family: 'Roboto';
-}
-
 *,
 *::before,
 *::after {
     box-sizing: inherit;
-    /* border: 1px dashed black; */
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
 }
 
 body {
-    /* width: 100%; */
     height: 100vh;
-
     margin: 0;
-
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* main {
-    
-} */
-
-button {
-    width: 100%;
-    padding: 15px;
-    font-weight: bold;
-    color: rgb(0, 177, 227);
-    background-color: rgb(210, 247, 255);
-    border: none;
-    margin: 2px;
-    border-radius: 5px;
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-button:nth-child(2) {
-    font-weight: bold;
-    color: rgb(0, 183, 139);
-    background-color: rgb(207, 248, 239);
-}
-
-button:nth-child(3) {
-    font-weight: bold;
-    color: rgb(128, 61, 218);
-    background-color: rgb(232, 227, 246);
 }
 
 header {
-    margin-bottom: auto;
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    
 }
 
 footer {
-    margin-top: auto;
+    margin: auto;
 }
 
-div {
-    font-size: 20px;
+main {
+    display: flex;
 }
 
-input {
-    font-size: 20px;
-}
-input:hover {
-    cursor: pointer;
-}
-
-label {
-    font-size: 20px;
+button {
+    padding: 20px;
+    margin: 2px;
+    border-radius: 5px;
+    font-family: inherit;
 }

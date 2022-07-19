@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="modal" />
+        <title>Modal Form</title>
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+
+                font-family: 'Roboto', 'SF Pro Display', sans-serif;
+                height: 3000px;
+            }
+
+            #prompt-form {
+                display: inline-block;
+                padding: 5px 5px 5px 70px;
+                width: 200px;
+                border: 1px solid black;
+                background: white url(https://en.js.cx/clipart/prompt.png)
+                    no-repeat left 5px;
+                vertical-align: middle;
+            }
+
+            #prompt-form-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 9999;
+                /* display: none; */
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+            #prompt-form-container:before {
+                display: inline-block;
+                height: 100%;
+                content: '';
+                vertical-align: middle;
+            }
+
+            .cover {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                width: 100vw;
+                height: 100vh;
+                background-color: gray;
+                opacity: 0.6;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            #prompt-form input[name='text'] {
+                display: block;
+                margin: 5px;
+                width: 180px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="prompt-form-container">
+            <form id="prompt-form" action="#">
+                <div id="prompt-message">Enter something... <br />Please..</div>
+                <input name="text" type="text" />
+                <input name="submit" type="submit" value="Submit" />
+                <input name="cancel" type="button" value="Cancel" />
+            </form>
+        </div>
+        <script>
+            // https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
+
+            const header = document.createElement('h1');
+            const button = document.createElement('button');
+            const cover = document.createElement('div');
+
+            const form = document.forms['prompt-form'];
+
+            const [firstInput, secondInput, thirdInput] = form.elements;
+
+            const prompt = document.querySelector('#prompt-message');
+            const container = document.querySelector('#prompt-form-container');
+
+            button.textContent = 'Click to show the form';
+            header.textContent = 'Click the button below';
+
+            cover.classList.add('cover', 'hidden');
+            container.classList.add('hidden');
+
+            document.body.append(header, button, cover);
+
+            button.addEventListener('click', function (event) {
+                updatePrompt(
+                    'Enter something<br>...smart :)',
+                    function (value) {
+                        alert('You entered: ' + value);
+                    }
+                );
+            });
+
+            function updatePrompt(html, callback) {
+                toggle(cover, container);
+
+                firstInput.focus();
+
+                prompt.innerHTML = html;
+
+                form.addEventListener('submit', submit);
+                form.addEventListener('keydown', keydown);
+                form.cancel.addEventListener('click', cancel);
+
+                // helper updatePrompt(), submit(), cancel()
+                function toggle(...element) {
+                    element.forEach(element =>
+                        element.classList.toggle('hidden')
+                    );
+                }
+
+                // event listener
+                function submit(event) {
+                    let value = firstInput.value;
+                    if (value.length == 0) {
+                        event.preventDefault();
+                    } else {
+                        toggle(cover, container);
+                        removeEvents();
+                        // firstInput.value still exists after callback
+                        // consider calling form.reset()
+                        firstInput.value = '';
+                        callback(value); // submit -> callback -> sent
+                    }
+                }
+
+                // event listener - focus trap
+                function keydown(event) {
+                    if (isEscape(event)) {
+                        cancel();
+                    }
+                    if (event.shiftKey && isTab(event)) {
+                        event.preventDefault();
+                        if (document.activeElement == firstInput) {
+                            thirdInput.focus();
+                        } else if (document.activeElement == secondInput) {
+                            firstInput.focus();
+                        } else {
+                            secondInput.focus();
+                        }
+                    } else if (isTab(event)) {
+                        event.preventDefault();
+                        if (document.activeElement == firstInput) {
+                            secondInput.focus();
+                        } else if (document.activeElement == secondInput) {
+                            thirdInput.focus();
+                        } else {
+                            firstInput.focus();
+                        }
+                    }
+                }
+
+                // event listener
+                function cancel(event) {
+                    toggle(cover, container);
+                    removeEvents();
+                    // firstInput.value still exists after callback
+                    // consider calling form.reset()
+                    firstInput.value = '';
+                    callback(null); // cancel -> callback
+                }
+
+                // helper keydown()
+                function isEscape(event) {
+                    return (
+                        event.key === 'Escape' ||
+                        event.key === 'Esc' ||
+                        event.keyCode === 27
+                    );
+                }
+
+                // helper keydown()
+                function isTab(event) {
+                    return event.key === 'Tab' || event.keyCode === 9;
+                }
+
+                // helper cancel(), submit()
+                function removeEvents() {
+                    form.removeEventListener('submit', submit);
+                    form.removeEventListener('keydown', keydown);
+                    form.cancel.removeEventListener('click', cancel);
+                }
+            }
+        </script>
+    </body>
+</html>
