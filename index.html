@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="./styles/new.css" />
         <link rel="stylesheet" href="./styles/style.css" />
         <script defer src="./scripts/main.js"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -25,22 +26,67 @@
         <title>Rock Paper Scissors</title>
     </head>
     <body>
-        <header>Rock Paper Scissors</header>
+        <header>
+            <h1>rock paper scissors</h1>
+            <nav>
+                <a href="#">home</a> /
+                <a href="https://newcss.net">new.css</a> /
+                <a href="https://www.theodinproject.com">odin-project</a> /
+                <a href="https://en.wikipedia.org/wiki/Rock_paper_scissors"
+                    >rules</a
+                >
+                /
+                <a href="https://github.com/remotelyqueued">github</a>
+            </nav>
+        </header>
         <main>
-            <button type="button">rock</button>
-            <button type="button">paper</button>
-            <button type="button">scissors</button>
-            <div>results</div>
-            <label for="reset">start over</label>
-            <input id="reset" type="button" value="reset" onclick="reset()" />
-            <label for="test">test randomness</label>
-            <input
-                id="test"
-                type="button"
-                value="test"
-                onclick="throttleTest()"
-            />
+            <section>
+                <details>
+                    <summary>rules</summary>
+                    <ol>
+                        <li>player chooses</li>
+                        <li>computer chooses</li>
+                        <li>results are displayed</li>
+                        <li>test randomness!</li>
+                    </ol>
+                </details>
+                <details>
+                    <summary>regulations</summary>
+                    <ol>
+                        <li>player chooses</li>
+                        <li>computer chooses</li>
+                        <li>results are displayed</li>
+                        <li>test randomness!</li>
+                    </ol>
+                </details>
+            </section>
+            <section>
+                <button type="button">rock</button>
+                <button type="button">paper</button>
+                <button type="button">scissors</button>
+            </section>
+            <section>
+                <pre>results</pre>
+            </section>
+            <section>
+                <label for="reset">start over:</label>
+                <input
+                    id="reset"
+                    type="button"
+                    value="reset"
+                    onclick="reset()"
+                />
+                <label for="test">test randomness</label>
+                <input
+                    id="test"
+                    type="button"
+                    value="test"
+                    onclick="throttleTest()"
+                />
+            </section>
         </main>
-        <footer>footer</footer>
+
+        <footer>👻odin project</footer>
     </body>
+
 </html>

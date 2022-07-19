@@ -6,33 +6,72 @@
 
 html {
     box-sizing: border-box;
-    font-size: 10px;
-    font-family: 'Press Start 2P', cursive;
 }
 
 body {
-    height: 100vh;
-    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
 }
 
 header {
-    display: flex;
-    justify-content: center;
-    font-size: 2em;
-    
+    text-align: center;
+    position: sticky;
+    padding: 2rem;
+    margin: 0;
 }
 
-footer {
-    margin: auto;
+h1 {
+    font-family: 'Press Start 2P', cursive;
 }
 
 main {
     display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    /* flex: 1 0 auto; */
+}
+
+section {
+    display: flex;
+
+    gap: 4px;
+    flex-flow: row wrap;
+}
+
+section:nth-child(4) {
+    justify-content: space-between;
+    align-items: center;
+}
+
+label {
+    flex: 1;
+}
+
+input {
+    flex: 1;
+}
+
+details {
+    flex: 1;
 }
 
 button {
-    padding: 20px;
-    margin: 2px;
+    font-family: 'Press Start 2P', cursive;
     border-radius: 5px;
-    font-family: inherit;
+    flex: 1;
+    padding: 20px;
+}
+
+pre {
+    flex: 1;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    background: rgb(246, 248, 250);
 }

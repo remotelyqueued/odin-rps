@@ -17,7 +17,7 @@ function game(button, event) {
     console.log('4. game called...');
     const outcome = playRound(event.target.textContent, computerPlay());
     results[outcome]++;
-    document.querySelector('div').textContent = outcome;
+    setPre(outcome);
     button.dispatchEvent(new CustomEvent(`${outcome}`, { bubbles: true }));
 }
 
@@ -58,6 +58,7 @@ function reset() {
     results.computer = 0;
     results.player = 0;
     results.tie = 0;
+    // setPre('results');
 }
 
 function setThrottle(callback, ms) {
@@ -95,7 +96,7 @@ document.querySelectorAll('button').forEach(button =>
 document.addEventListener('player', event => {
     console.log(results);
     if (results.player >= 5) {
-        alert('You won!');
+        setPre('You won!');
         reset();
     }
 });
@@ -103,7 +104,7 @@ document.addEventListener('player', event => {
 document.addEventListener('computer', event => {
     console.log(results);
     if (results.computer >= 5) {
-        alert('You lost!');
+        setPre('You lost!');
         reset();
     }
 });
@@ -111,6 +112,10 @@ document.addEventListener('computer', event => {
 document.addEventListener('tie', event => {
     console.log(results);
 });
+
+function setPre(string) {
+    document.querySelector('pre').textContent = string;
+}
 
 function test() {
     console.log('Test randomness called...');
@@ -126,7 +131,21 @@ function test() {
             count[result]++;
         }
     });
-    for (key in count) {
-        console.log(key + ': ' + count[key].toLocaleString());
+
+    let highScore = Math.max(...Object.values(count));
+    let winner = Object.keys(count).find(key => count[key] === highScore);
+
+    if (winner === 'tie') {
+        winner = `lol, ${winner} won!...wait wut`;
+    } else {
+        winner = `${winner} won!!!`;
     }
+
+    setPre(`
+    after 30 million games:
+    player: ${count.player.toLocaleString()}
+    computer: ${count.computer.toLocaleString()}
+    tie: ${count.tie.toLocaleString()}
+    ${winner}
+    `);
 }

@@ -30,3 +30,4 @@ todo:
 ui design - font, flex, images, sound
 airbnb style guide
 modal
+input 3 - 100,000,000 games
