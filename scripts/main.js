@@ -9,6 +9,17 @@ const results = {
 const throttleGame = setThrottle(game, 100);
 const throttleTest = setThrottle(test, 5000);
 
+const modal = document.querySelector('#modal');
+// modal.setAttribute('style', 'display:none;');
+modal.classList.add('hidden');
+
+const cover = document.createElement('div');
+cover.classList.add('cover', 'hidden');
+document.body.append(cover);
+
+const form = document.forms['form'];
+const [firstInput, secondInput, thirdInput] = form.elements;
+
 function computerPlay() {
     return ['rock', 'paper', 'scissors'].at(Math.floor(Math.random() * 3));
 }
@@ -97,8 +108,7 @@ document.addEventListener('player', event => {
 
 document.addEventListener('computer', event => {
     if (results.computer >= 5) {
-        setPre('<span>😭</span><br/>You lost!');
-        resetScore();
+        updatePrompt('<span>😭</span><br/>You lost!', resetScore);
     }
 });
 
@@ -107,6 +117,97 @@ document.addEventListener('computer', event => {
 
 function setPre(string) {
     document.querySelector('pre').innerHTML = string;
+}
+
+function updatePrompt(html, callback) {
+    setPre(html);
+
+    toggle(cover, modal);
+    toggleButtons();
+
+    firstInput.focus();
+
+    document.querySelector('#message').innerHTML = html;
+
+    form.addEventListener('submit', submit);
+    form.addEventListener('keydown', keydown);
+    form.cancel.addEventListener('click', cancel);
+
+    function toggle(...elements) {
+        elements.forEach(element => element.classList.toggle('hidden'));
+    }
+
+    function submit(event) {
+        let value = firstInput.value;
+        if (value.length == 0) {
+            event.preventDefault();
+        } else {
+            toggle(cover, modal);
+            toggleButtons();
+            removeEvents();
+            // firstInput.value still exists after callback
+            // consider calling form.reset()
+            firstInput.value = '';
+            callback(value); // submit -> callback -> sent
+        }
+    }
+
+    // event listener - focus trap
+    function keydown(event) {
+        if (isEscape(event)) {
+            cancel();
+        }
+        if (event.shiftKey && isTab(event)) {
+            event.preventDefault();
+            if (document.activeElement == firstInput) {
+                thirdInput.focus();
+            } else if (document.activeElement == secondInput) {
+                firstInput.focus();
+            } else {
+                secondInput.focus();
+            }
+        } else if (isTab(event)) {
+            event.preventDefault();
+            if (document.activeElement == firstInput) {
+                secondInput.focus();
+            } else if (document.activeElement == secondInput) {
+                thirdInput.focus();
+            } else {
+                firstInput.focus();
+            }
+        }
+    }
+
+    // event listener
+    function cancel(event) {
+        toggle(cover, modal);
+        removeEvents();
+        // firstInput.value still exists after callback
+        // consider calling form.reset()
+        firstInput.value = '';
+        callback(); // cancel -> callback
+    }
+
+    // helper keydown()
+    function isEscape(event) {
+        return (
+            event.key === 'Escape' ||
+            event.key === 'Esc' ||
+            event.keyCode === 27
+        );
+    }
+
+    // helper keydown()
+    function isTab(event) {
+        return event.key === 'Tab' || event.keyCode === 9;
+    }
+
+    // helper cancel(), submit()
+    function removeEvents() {
+        form.removeEventListener('submit', submit);
+        form.removeEventListener('keydown', keydown);
+        form.cancel.removeEventListener('click', cancel);
+    }
 }
 
 function test() {
@@ -139,4 +240,10 @@ player: ${count.player.toLocaleString()}
 computer: ${count.computer.toLocaleString()}
 tie: ${count.tie.toLocaleString()}
 <strong>${winner}</strong>`);
+}
+
+function toggleButtons() {
+    document
+        .querySelectorAll('button')
+        .forEach(button => (button.disabled = !button.disabled));
 }
