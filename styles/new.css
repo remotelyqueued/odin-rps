@@ -30,7 +30,7 @@
     --nc-d-ac-tx: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :root {
         --nc-tx-1: var(--nc-d-tx-1);
         --nc-tx-2: var(--nc-d-tx-2);
@@ -43,7 +43,7 @@
         --nc-ac-1: var(--nc-d-ac-1);
         --nc-ac-tx: var(--nc--dac-tx);
     }
-}
+} */
 
 * {
     /* Reset margins and padding */

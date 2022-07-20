@@ -1,36 +1,68 @@
-html { 
+html {
+    box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
     font-family: 'liga_roboto_monoregular';
 }
 
 body {
-    /* neccessary for footer ----------- */
-    min-height: 100vh;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    /* --------------------------------- */
-    max-width: 950px;
+    margin: 0;
+    min-height: 100vh;
+    padding: 0;
 }
 
 header {
     text-align: center;
+    flex: 0;
+    background: #f6f8fa;
+    border-bottom: 1px #e5e7eb;
+    width: 100%;
+    padding: 2rem;
 }
 
 h1 {
     font-family: 'karmatic_arcaderegular';
 }
 
-section {
-    display: flex;
-    flex-flow: row wrap;
-    gap: 4px;
+::selection {
+    background: #79ffe1;
+    color: #0c4047;
 }
 
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    flex: 1;
+}
+
+:focus::before {
+    outline: 1px solid #79ffe1;
+}
+
+:focus::after {
+    outline: green;
+}
+
+/*
 input {
     flex: 1;
 }
 
 details {
-    flex: 1;
+    flex: auto;
 }
 
 button {
@@ -43,20 +75,15 @@ button {
 pre {
     flex: 1;
     text-align: center;
-    /* height: 34rem; */
     font-size: 1.6rem;
 }
 
 footer {
     text-align: center;
     background: rgb(246, 248, 250);
-    /* 
-    pins footer at bottom of flex container and 
-    expands it to full width of document 
-    */
-    margin: -2rem calc(50% - 50vw);
     margin-top: auto;
-}
+    padding: -2rem;
+} */
 
 span {
     display: block;
