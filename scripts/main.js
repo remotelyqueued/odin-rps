@@ -53,7 +53,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function reset() {
+function resetScore() {
     results.computer = 0;
     results.player = 0;
     results.tie = 0;
@@ -91,14 +91,14 @@ document.querySelectorAll('button').forEach(button =>
 document.addEventListener('player', event => {
     if (results.player >= 5) {
         setPre('<span>🤯</span><br/>You won!');
-        reset();
+        resetScore();
     }
 });
 
 document.addEventListener('computer', event => {
     if (results.computer >= 5) {
         setPre('<span>😭</span><br/>You lost!');
-        reset();
+        resetScore();
     }
 });
 
@@ -133,12 +133,10 @@ function test() {
         winner = `${winner} won!!!`;
     }
 
-    setPre(`
-    <span>🏆</span>
-    after 30 million games:
-    player: ${count.player.toLocaleString()}
-    computer: ${count.computer.toLocaleString()}
-    tie: ${count.tie.toLocaleString()}
-    ${winner}
-    `);
+    setPre(`<span>🏆</span>
+30 million games:
+player: ${count.player.toLocaleString()}
+computer: ${count.computer.toLocaleString()}
+tie: ${count.tie.toLocaleString()}
+<strong>${winner}</strong>`);
 }
