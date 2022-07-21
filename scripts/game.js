@@ -1,7 +1,6 @@
 export function game(button, event, results) {
     const outcome = playRound(event.target.textContent, computerPlay());
     results[outcome]++;
-    document.querySelector('pre').innerHTML = outcome;
     button.dispatchEvent(new CustomEvent(`${outcome}`, { bubbles: true }));
 }
 

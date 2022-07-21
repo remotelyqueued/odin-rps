@@ -8,6 +8,8 @@ const throttleGame = setThrottle(game, 100);
 const throttleTest = setThrottle(test, 5000);
 
 const modal = document.getElementById('modal');
+const pre = document.querySelector('pre');
+
 const cover = document.createElement('div');
 
 const results = {
@@ -16,9 +18,15 @@ const results = {
     tie: 0,
 };
 
+const reset = () => {
+    results.computer = 0;
+    results.player = 0;
+    results.tie = 0;
+};
+
 makeEditable(document.querySelector('h1'));
-makeEditable(document.querySelector('pre'));
 makeEditable(document.querySelector('footer'));
+makeEditable(pre);
 
 modal.classList.add('hidden');
 cover.classList.add('cover', 'hidden');
@@ -36,25 +44,30 @@ document.querySelector('#test').addEventListener('click', event => {
 });
 
 document.querySelector('#reset').addEventListener('click', event => {
-    results.computer = 0;
-    results.player = 0;
-    results.tie = 0;
+    reset();
 });
 
+// todo: display computer choice player choice
+// display results
+// when results are displayed not shift text
 document.addEventListener('player', event => {
+    pre.innerHTML =
+        'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
-        results.computer = 0;
-        results.player = 0;
-        results.tie = 0;
+        reset();
         updateModal('<span>🤯</span><br/>You won!', modal, cover);
     }
 });
 
 document.addEventListener('computer', event => {
+    pre.innerHTML =
+        'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
-        results.computer = 0;
-        results.player = 0;
-        results.tie = 0;
+        reset();
         updateModal('<span>😭</span><br/>You lost!', modal, cover);
     }
+});
+
+document.addEventListener('tie', event => {
+    pre.innerHTML = 'Tie game!<br />' + JSON.stringify(results, null, 2);
 });
