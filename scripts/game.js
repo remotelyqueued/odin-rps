@@ -1,9 +1,7 @@
-import { setPre } from './modal.js';
-
 export function game(button, event, results) {
     const outcome = playRound(event.target.textContent, computerPlay());
     results[outcome]++;
-    setPre(outcome);
+    document.querySelector('pre').innerHTML = outcome;
     button.dispatchEvent(new CustomEvent(`${outcome}`, { bubbles: true }));
 }
 
@@ -67,10 +65,10 @@ export function test() {
         winner = `${winner} won!!!`;
     }
 
-    setPre(`<span>🏆</span>
+    document.querySelector('pre').innerHTML = `<span>🏆</span>
     30 million games:
     player: ${count.player.toLocaleString()}
     computer: ${count.computer.toLocaleString()}
     tie: ${count.tie.toLocaleString()}
-    <strong>${winner}</strong>`);
+    <strong>${winner}</strong>`;
 }

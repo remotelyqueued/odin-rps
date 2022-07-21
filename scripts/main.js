@@ -1,14 +1,20 @@
 // main.js
 import { setThrottle } from './throttle.js';
+import { makeEditable } from './editable.js';
 import { updateModal } from './modal.js';
 import { game, test } from './game.js';
-import { makeEditable } from './editable.js';
 
 const throttleGame = setThrottle(game, 100);
 const throttleTest = setThrottle(test, 5000);
 
-const modal = document.querySelector('#modal');
+const modal = document.getElementById('modal');
 const cover = document.createElement('div');
+
+const results = {
+    computer: 0,
+    player: 0,
+    tie: 0,
+};
 
 makeEditable(document.querySelector('h1'));
 makeEditable(document.querySelector('pre'));
@@ -30,37 +36,25 @@ document.querySelector('#test').addEventListener('click', event => {
 });
 
 document.querySelector('#reset').addEventListener('click', event => {
-    resetScore();
+    results.computer = 0;
+    results.player = 0;
+    results.tie = 0;
 });
 
 document.addEventListener('player', event => {
-    if (getResult('player') >= 5) {
-        resetScore();
+    if (results.player >= 5) {
+        results.computer = 0;
+        results.player = 0;
+        results.tie = 0;
         updateModal('<span>🤯</span><br/>You won!', modal, cover);
     }
 });
 
 document.addEventListener('computer', event => {
-    if (getResult('computer') >= 5) {
-        resetScore();
+    if (results.computer >= 5) {
+        results.computer = 0;
+        results.player = 0;
+        results.tie = 0;
         updateModal('<span>😭</span><br/>You lost!', modal, cover);
     }
 });
-
-// document.addEventListener('tie', event => {});
-
-const results = {
-    computer: 0,
-    player: 0,
-    tie: 0,
-};
-
-export function getResult(name) {
-    return results[name];
-}
-
-export function resetScore() {
-    results.computer = 0;
-    results.player = 0;
-    results.tie = 0;
-}

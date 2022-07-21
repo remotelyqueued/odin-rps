@@ -1,13 +1,13 @@
 export function updateModal(html, modal, cover) {
     const form = document.forms['form'];
     const [firstInput, secondInput] = form.elements;
-
-    setPre(html);
+   
     toggle(cover, modal);
     toggleButtons();
     firstInput.focus();
 
-    document.querySelector('#message').innerHTML = html;
+    document.querySelector('pre').innerHTML = html;
+    document.getElementById('message').innerHTML = html;
 
     form.addEventListener('submit', submit);
     form.addEventListener('keydown', keydown);
@@ -73,8 +73,4 @@ export function updateModal(html, modal, cover) {
             .querySelectorAll('button')
             .forEach(button => (button.disabled = !button.disabled));
     }
-}
-
-export function setPre(string) {
-    document.querySelector('pre').innerHTML = string;
 }
