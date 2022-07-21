@@ -4,11 +4,12 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="paper rock scissors" />
 
         <link rel="stylesheet" href="./styles/style.css" />
         <link rel="stylesheet" href="./web-fonts/stylesheet.css" />
 
-        <script defer src="./scripts/main.js"></script>
+        <script type="module" src="./scripts/main.js"></script>
 
         <link
             rel="icon"
@@ -21,7 +22,7 @@
     </head>
     <body>
         <header>
-            <h1 contenteditable spellcheck="false">rock paper scissors</h1>
+            <h1>rock paper scissors</h1>
             <nav>
                 <a href="#">home</a> /
                 <a href="https://newcss.net">new.css</a> /
@@ -63,35 +64,24 @@
                 <button type="button">scissors</button>
             </section>
             <section>
-                <pre contenteditable spellcheck="false">results</pre>
+                <pre>results</pre>
             </section>
             <section>
                 <form>
                     <label for="reset">start over:</label>
-                    <input
-                        id="reset"
-                        type="button"
-                        value="reset"
-                        onclick="resetScore()"
-                    />
+                    <input id="reset" type="button" value="reset" />
                 </form>
                 <form>
                     <label for="test">test:</label>
-                    <input
-                        id="test"
-                        type="button"
-                        value="test"
-                        onclick="throttleTest()"
-                    />
+                    <input id="test" type="button" value="test" />
                 </form>
             </section>
         </main>
 
-        <footer contenteditable spellcheck="false">👻odin-project</footer>
+        <footer>👻odin-project</footer>
         <div id="modal">
             <form id="form" action="#">
                 <div id="message"></div>
-                <input name="text" type="text" />
                 <input name="submit" type="submit" value="Play again?" />
                 <input name="cancel" type="button" value="I'm leaving!" />
             </form>

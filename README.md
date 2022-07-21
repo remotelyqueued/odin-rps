@@ -27,6 +27,7 @@
 -   branching - merging
 
 todo:
-ui design (scale, footer)
-restart button after win (modal?)
+ui design
+modal design
+button design
 airbnb style guide
