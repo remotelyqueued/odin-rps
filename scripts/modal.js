@@ -1,36 +1,25 @@
 export function updateModal(html, modal, cover) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
+
+    // console.log(document.activeElement);
+
+    // const main = document.querySelector('main');
+    // const header = document.querySelector('header');
+    // const footer = document.querySelector('footer');
+
+    // function toggleInert() {
+    //     main.toggleAttribute('inert');
+    //     header.toggleAttribute('inert');
+    //     footer.toggleAttribute('inert');
+    // }
+
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
 
-    const main = document.querySelector('main');
-    const header = document.querySelector('header');
-    const footer = document.querySelector('footer');
-
     toggle(cover, modal);
-    // toggleButtons();
 
-    console.log(document.activeElement);
-
-    // https://github.com/jquery/jquery/issues/4950
-
-    document.getElementById('focus').focus();
-    // firstInput.focus();
-    // secondInput.focus();
-
-    console.log('firstInput:', firstInput);
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-    
-    // toggleInert();
-
-    // what didn't work
-
-    // firstInput.setAttribute('tabindex', -1);
-    // firstInput.focus();
-
-    // firstInput.focus()
-    // firstInput.select();
-    // autofocus attribute
+    firstInput.focus(); // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
+    document.addEventListener('click', preventEscape);
 
     document.querySelector('pre').innerHTML = html;
     document.getElementById('message').innerHTML = html;
@@ -44,9 +33,7 @@ export function updateModal(html, modal, cover) {
     }
 
     function submit(event) {
-        // toggleInert();
         toggle(cover, modal);
-        // toggleButtons();
         removeEvents();
     }
 
@@ -73,7 +60,6 @@ export function updateModal(html, modal, cover) {
     }
 
     function cancel(event) {
-        // toggleInert();
         toggle(cover, modal);
         removeEvents();
     }
@@ -86,6 +72,13 @@ export function updateModal(html, modal, cover) {
         );
     }
 
+    // todo: 
+    // can tab from url on firefox or spam click body and eventually focus
+    // goes behind modal
+    function preventEscape(event) {
+        firstInput.focus();
+    }
+
     function isTab(event) {
         return event.key === 'Tab' || event.keyCode === 9;
     }
@@ -94,17 +87,6 @@ export function updateModal(html, modal, cover) {
         form.removeEventListener('submit', submit);
         form.removeEventListener('keydown', keydown);
         form.cancel.removeEventListener('click', cancel);
+        document.removeEventListener('click', preventEscape);
     }
-
-    function toggleInert() {
-        main.toggleAttribute('inert');
-        header.toggleAttribute('inert');
-        footer.toggleAttribute('inert');
-    }
-
-    // function toggleButtons() {
-    //     document
-    //         .querySelectorAll('button')
-    //         .forEach(button => (button.disabled = !button.disabled));
-    // }
 }

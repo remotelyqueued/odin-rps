@@ -5,6 +5,7 @@ export function game(button, event, results) {
 }
 
 function playRound(playerSelection, computerSelection) {
+    // trim() formated html had spaces
     switch (playerSelection.trim().toLowerCase()) {
         case 'rock':
             switch (computerSelection) {
@@ -47,6 +48,7 @@ export function test() {
         computer: 0,
         tie: 0,
     };
+
     const choices = ['rock', 'paper', 'scissors'];
     choices.forEach(option => {
         for (let i = 0; i < 10_000_000; i++) {
@@ -54,7 +56,8 @@ export function test() {
             count[result]++;
         }
     });
-    // note: Object.values iterates over all ennumerable properties
+
+    // Object.values iterates over all ennumerable properties
     let highScore = Math.max(...Object.values(count));
     let winner = Object.keys(count).find(key => count[key] === highScore);
 

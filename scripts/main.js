@@ -29,13 +29,14 @@ makeEditable(document.querySelector('footer'));
 makeEditable(document.getElementById('message'));
 makeEditable(pre);
 
-pre.focus(); // works
+pre.focus();
 
 cover.classList.add('cover', 'hidden');
 document.body.append(cover);
 
 document.querySelectorAll('.front').forEach(button =>
     button.addEventListener('pointerdown', event => {
+        event.preventDefault(); // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
         throttleGame(button, event, results);
     })
 );
@@ -49,13 +50,11 @@ document.getElementById('reset').addEventListener('click', event => {
 });
 
 document.addEventListener('player', event => {
+    event.preventDefault();
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
         reset();
-        console.log('before setting focus:', document.activeElement);
-        document.getElementById('focus').focus();
-        console.log('after setting focus', document.activeElement);
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
@@ -65,13 +64,11 @@ document.addEventListener('player', event => {
 });
 
 document.addEventListener('computer', event => {
+    event.preventDefault();
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
         reset();
-        console.log('before setting focus:', document.activeElement);
-        document.getElementById('focus').focus();
-        console.log('after setting focus', document.activeElement);
         updateModal(
             '<span class="results">😭</span><br/>You lost!',
             modal,
