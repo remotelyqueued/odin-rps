@@ -7,17 +7,30 @@ export function updateModal(html, modal, cover) {
     const footer = document.querySelector('footer');
 
     toggle(cover, modal);
-    toggleButtons();
+    // toggleButtons();
+
+    console.log(document.activeElement);
+
+    // https://github.com/jquery/jquery/issues/4950
+
+    document.getElementById('focus').focus();
+    // firstInput.focus();
+    // secondInput.focus();
+
+    console.log('firstInput:', firstInput);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-    toggleInert();
+    
+    // toggleInert();
 
     // what didn't work
 
+    // firstInput.setAttribute('tabindex', -1);
+    // firstInput.focus();
+
     // firstInput.focus()
     // firstInput.select();
-    // firstInput.setAttribute('tabindex', 999);
-    // autofocus and tabindex on html
+    // autofocus attribute
 
     document.querySelector('pre').innerHTML = html;
     document.getElementById('message').innerHTML = html;
@@ -31,9 +44,9 @@ export function updateModal(html, modal, cover) {
     }
 
     function submit(event) {
-        toggleInert();
+        // toggleInert();
         toggle(cover, modal);
-        toggleButtons();
+        // toggleButtons();
         removeEvents();
     }
 
@@ -60,7 +73,7 @@ export function updateModal(html, modal, cover) {
     }
 
     function cancel(event) {
-        toggleInert();
+        // toggleInert();
         toggle(cover, modal);
         removeEvents();
     }
@@ -89,9 +102,9 @@ export function updateModal(html, modal, cover) {
         footer.toggleAttribute('inert');
     }
 
-    function toggleButtons() {
-        document
-            .querySelectorAll('button')
-            .forEach(button => (button.disabled = !button.disabled));
-    }
+    // function toggleButtons() {
+    //     document
+    //         .querySelectorAll('button')
+    //         .forEach(button => (button.disabled = !button.disabled));
+    // }
 }

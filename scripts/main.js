@@ -26,7 +26,10 @@ const reset = () => {
 
 makeEditable(document.querySelector('h1'));
 makeEditable(document.querySelector('footer'));
+makeEditable(document.getElementById('message'));
 makeEditable(pre);
+
+pre.focus(); // works
 
 cover.classList.add('cover', 'hidden');
 document.body.append(cover);
@@ -50,6 +53,9 @@ document.addEventListener('player', event => {
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
         reset();
+        console.log('before setting focus:', document.activeElement);
+        document.getElementById('focus').focus();
+        console.log('after setting focus', document.activeElement);
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
@@ -63,6 +69,9 @@ document.addEventListener('computer', event => {
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
         reset();
+        console.log('before setting focus:', document.activeElement);
+        document.getElementById('focus').focus();
+        console.log('after setting focus', document.activeElement);
         updateModal(
             '<span class="results">😭</span><br/>You lost!',
             modal,
