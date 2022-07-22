@@ -27,7 +27,11 @@
 -   branching - merging
 
 todo:
-ui design
 modal design
-button design
 airbnb style guide
+
+when results are displayed not shift text
+test loading
+reset do something
+
+why need to use inert

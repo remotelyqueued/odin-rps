@@ -1,10 +1,23 @@
 export function updateModal(html, modal, cover) {
-    const form = document.forms['form'];
+    const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
-   
+
+    const main = document.querySelector('main');
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+
     toggle(cover, modal);
     toggleButtons();
-    firstInput.focus();
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
+    toggleInert();
+
+    // what didn't work
+
+    // firstInput.focus()
+    // firstInput.select();
+    // firstInput.setAttribute('tabindex', 999);
+    // autofocus and tabindex on html
 
     document.querySelector('pre').innerHTML = html;
     document.getElementById('message').innerHTML = html;
@@ -18,6 +31,7 @@ export function updateModal(html, modal, cover) {
     }
 
     function submit(event) {
+        toggleInert();
         toggle(cover, modal);
         toggleButtons();
         removeEvents();
@@ -46,6 +60,7 @@ export function updateModal(html, modal, cover) {
     }
 
     function cancel(event) {
+        toggleInert();
         toggle(cover, modal);
         removeEvents();
     }
@@ -66,6 +81,12 @@ export function updateModal(html, modal, cover) {
         form.removeEventListener('submit', submit);
         form.removeEventListener('keydown', keydown);
         form.cancel.removeEventListener('click', cancel);
+    }
+
+    function toggleInert() {
+        main.toggleAttribute('inert');
+        header.toggleAttribute('inert');
+        footer.toggleAttribute('inert');
     }
 
     function toggleButtons() {

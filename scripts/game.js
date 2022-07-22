@@ -5,7 +5,7 @@ export function game(button, event, results) {
 }
 
 function playRound(playerSelection, computerSelection) {
-    switch (playerSelection.toLowerCase()) {
+    switch (playerSelection.trim().toLowerCase()) {
         case 'rock':
             switch (computerSelection) {
                 case 'rock':
@@ -64,7 +64,7 @@ export function test() {
         winner = `${winner} won!!!`;
     }
 
-    document.querySelector('pre').innerHTML = `<span>🏆</span>
+    document.querySelector('pre').innerHTML = `<span class="results">🏆</span>
     30 million games:
     player: ${count.player.toLocaleString()}
     computer: ${count.computer.toLocaleString()}

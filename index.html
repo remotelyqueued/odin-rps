@@ -8,10 +8,8 @@
 
         <link rel="stylesheet" href="./web-fonts/stylesheet.css" />
 
-        <!-- <link rel="stylesheet" href="./styles/98.css" /> -->
         <link rel="stylesheet" href="./styles/style.css" />
-        <link rel="stylesheet" href="./styles/button-collection.css" />
-
+        <link rel="stylesheet" href="./styles/button.css" />
         <script type="module" src="./scripts/main.js"></script>
 
         <link
@@ -21,14 +19,16 @@
         <!-- 
             🕶 🍔 👻 🤯 🙅 🤣 😭 👍
         -->
-        <title>Rock Paper Scissors</title>
+        <title>rock paper scissors</title>
     </head>
     <body>
         <header>
             <h1>rock paper scissors</h1>
             <nav>
-                <a href="#">home</a> /
-                <a href="https://newcss.net">new.css</a> /
+                <a href="https://www.joshwcomeau.com/animation/3d-button/"
+                    >button-css</a
+                >
+                / <a href="https://newcss.net">new.css</a> /
                 <a href="https://www.theodinproject.com">odin-project</a> /
                 <a href="https://en.wikipedia.org/wiki/Rock_paper_scissors"
                     >rules</a
@@ -42,13 +42,10 @@
                 <details>
                     <summary>rules</summary>
                     <ol>
-                        <li>choose rock paper or scissors</li>
-                        <li>computer makes its choice</li>
+                        <li>select rock paper or scissors</li>
+                        <li>wait for computer to make its choice</li>
                         <li>results are displayed</li>
-                        <li>
-                            the test button below the results allows you to test
-                            how random the game is
-                        </li>
+                        <li>try out the test button below</li>
                     </ol>
                 </details>
                 <details>
@@ -56,15 +53,27 @@
                     <ol>
                         <li>don't press a button too often</li>
                         <li>placeholder</li>
-                        <li>results are displayed</li>
-                        <li>test randomness!</li>
+                        <li>placeholder</li>
+                        <li>randomness</li>
                     </ol>
                 </details>
             </section>
             <section>
-                <button type="button">rock</button>
-                <button type="button">paper</button>
-                <button type="button">scissors</button>
+                <button type="button" class="pushable">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">rock</span>
+                </button>
+                <button type="button" class="pushable">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">paper</span>
+                </button>
+                <button type="button" class="pushable">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">scissors</span>
+                </button>
             </section>
             <section>
                 <pre>results</pre>
@@ -82,7 +91,7 @@
         </main>
 
         <footer>👻odin-project</footer>
-        <div id="modal" style="display: none">
+        <div id="modal" class="hidden">
             <form id="form">
                 <div id="message"></div>
                 <input name="submit" type="submit" value="Play again?" />

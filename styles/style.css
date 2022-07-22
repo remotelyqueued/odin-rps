@@ -93,17 +93,9 @@ section:nth-child(2) {
     display: flex;
 }
 
-button {
-    background: #f6f8fa;
-    border: 1px solid #e5e7eb;
-    cursor: pointer;
-    height: 4rem;
-
-    flex: 1;
-}
-
 section:nth-child(3) {
     display: flex;
+
     flex: 6;
 }
 
@@ -125,33 +117,33 @@ pre {
 
     flex: 1;
 }
-/* ------------------------------------------ */
 
-/* ------------------------------------------ */
-
-/* ------------------------------------------ */
 section:nth-child(4) {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    flex: 2;
-    gap: 6px;
+    gap: 10px;
+
+    flex: 1;
 }
 
 label {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 input {
-    flex: 1;
-    width: 100px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-family: inherit;
+
     background: #f6f8fa;
     border: 1px solid #e5e7eb;
 
     cursor: pointer;
+
+    flex: 1;
 }
 
-span {
+span.results {
     display: block;
     text-align: center;
     font-size: 4rem;
@@ -180,15 +172,7 @@ span {
     opacity: 0.6;
 
     user-select: none;
-}
-
-#form {
-    display: inline-block;
-    padding: 5px;
-    width: 400px;
-    border: 1px solid black;
-    background: white;
-    vertical-align: middle;
+    overflow: hidden;
 }
 
 #modal {
@@ -210,32 +194,15 @@ span {
     vertical-align: middle;
 }
 
+#form {
+    display: inline-block;
+    padding: 20px;
+    border: 1px solid #0000ee;
+    background: white;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
 .hidden {
     display: none;
 }
-
-/*   
-colors to consider
-
-    --nc-tx-1: #000000;
-    --nc-tx-2: #1a1a1a;
-    --nc-bg-1: #ffffff;
-    --nc-bg-2: #f6f8fa;
-    --nc-bg-3: #e5e7eb;
-    --nc-lk-1: #0070f3;
-    --nc-lk-2: #0366d6;
-    --nc-lk-tx: #ffffff;
-    --nc-ac-1: #79ffe1;
-    --nc-ac-tx: #0c4047;
-
-  
-    --nc-d-tx-1: #ffffff;
-    --nc-d-tx-2: #eeeeee;
-    --nc-d-bg-1: #000000;
-    --nc-d-bg-2: #111111;
-    --nc-d-bg-3: #222222;
-    --nc-d-lk-1: #3291ff;
-    --nc-d-lk-2: #0070f3;
-    --nc-d-lk-tx: #ffffff;
-    --nc-d-ac-1: #7928ca;
-    --nc-d-ac-tx: #ffffff; */

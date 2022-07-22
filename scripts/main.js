@@ -28,34 +28,33 @@ makeEditable(document.querySelector('h1'));
 makeEditable(document.querySelector('footer'));
 makeEditable(pre);
 
-modal.classList.add('hidden');
 cover.classList.add('cover', 'hidden');
-
 document.body.append(cover);
 
-document.querySelectorAll('button').forEach(button =>
-    button.addEventListener('click', event => {
+document.querySelectorAll('.front').forEach(button =>
+    button.addEventListener('pointerdown', event => {
         throttleGame(button, event, results);
     })
 );
 
-document.querySelector('#test').addEventListener('click', event => {
+document.getElementById('test').addEventListener('click', event => {
     throttleTest();
 });
 
-document.querySelector('#reset').addEventListener('click', event => {
+document.getElementById('reset').addEventListener('click', event => {
     reset();
 });
 
-// todo: display computer choice player choice
-// display results
-// when results are displayed not shift text
 document.addEventListener('player', event => {
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
         reset();
-        updateModal('<span>🤯</span><br/>You won!', modal, cover);
+        updateModal(
+            '<span class="results">🤯</span><br/>You won!',
+            modal,
+            cover
+        );
     }
 });
 
@@ -64,7 +63,11 @@ document.addEventListener('computer', event => {
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
         reset();
-        updateModal('<span>😭</span><br/>You lost!', modal, cover);
+        updateModal(
+            '<span class="results">😭</span><br/>You lost!',
+            modal,
+            cover
+        );
     }
 });
 
