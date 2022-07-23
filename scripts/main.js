@@ -36,7 +36,8 @@ document.body.append(cover);
 
 document.querySelectorAll('.front').forEach(button =>
     button.addEventListener('pointerdown', event => {
-        event.preventDefault(); // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
+        event.preventDefault();
         throttleGame(button, event, results);
     })
 );
@@ -51,9 +52,11 @@ document.getElementById('reset').addEventListener('click', event => {
 
 document.addEventListener('player', event => {
     // event.preventDefault();
+    pre.style.alignItems = 'flex-start';
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
+        pre.style.alignItems = 'center';
         reset();
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
@@ -65,9 +68,11 @@ document.addEventListener('player', event => {
 
 document.addEventListener('computer', event => {
     // event.preventDefault();
+    pre.style.alignItems = 'flex-start';
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
+        pre.style.alignItems = 'center';
         reset();
         updateModal(
             '<span class="results">😭</span><br/>You lost!',
@@ -78,5 +83,6 @@ document.addEventListener('computer', event => {
 });
 
 document.addEventListener('tie', event => {
+    pre.style.alignItems = 'flex-start';
     pre.innerHTML = 'Tie game!<br />' + JSON.stringify(results, null, 2);
 });

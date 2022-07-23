@@ -71,10 +71,7 @@ export function updateModal(html, modal, cover) {
             event.keyCode === 27
         );
     }
-
-    // todo: 
-    // can tab from url on firefox or spam click body and eventually focus
-    // goes behind modal
+    
     function preventEscape(event) {
         firstInput.focus();
     }

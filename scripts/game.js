@@ -68,9 +68,9 @@ export function test() {
     }
 
     document.querySelector('pre').innerHTML = `<span class="results">🏆</span>
-    30 million games:
-    player: ${count.player.toLocaleString()}
-    computer: ${count.computer.toLocaleString()}
-    tie: ${count.tie.toLocaleString()}
-    <strong>${winner}</strong>`;
+30 million games:
+player: ${count.player.toLocaleString()}
+computer: ${count.computer.toLocaleString()}
+tie: ${count.tie.toLocaleString()}
+<strong>${winner}</strong>`;
 }
