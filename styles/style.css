@@ -37,7 +37,6 @@ h1 {
 
 main {
     gap: 0.8rem;
-    min-width: 70%;
 
     display: flex;
     flex-flow: column wrap;
@@ -52,7 +51,7 @@ section:nth-child(1) {
     justify-content: space-around;
     align-items: flex-end;
 
-    flex: 0;
+    /* flex: 0; */
 }
 
 details {
@@ -70,8 +69,8 @@ details[open] {
     padding-bottom: 0.75rem;
     margin-top: 1rem;
 
-    height: 170px;
-    width: 170px;
+    height: 160px;
+    width: 160px;
 }
 
 details[open] summary {
@@ -91,6 +90,7 @@ section:nth-child(2) {
     gap: 0.5rem;
 
     display: flex;
+    flex: 0;
 }
 
 section:nth-child(3) {
@@ -111,7 +111,6 @@ pre {
 
     display: flex;
 
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -122,23 +121,6 @@ section:nth-child(4) {
     display: flex;
     justify-content: center;
     gap: 10px;
-
-    flex: 1;
-}
-
-label {
-    font-size: 0.9rem;
-}
-
-input {
-    padding: 10px 24px;
-    border-radius: 4px;
-    font-family: inherit;
-
-    background: #f6f8fa;
-    border: 1px solid #e5e7eb;
-
-    cursor: pointer;
 
     flex: 1;
 }

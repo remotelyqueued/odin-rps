@@ -2,6 +2,7 @@
 
 button {
     flex: 1;
+    font-family: 'pixelated_ms';
 }
 
 .pushable {
@@ -46,9 +47,9 @@ button {
 .front {
     display: block;
     position: relative;
-    padding: 12px 42px;
+    padding: 10px 28px;
     border-radius: 12px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: white;
     background: hsl(345deg 100% 47%);
     will-change: transform;

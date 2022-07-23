@@ -50,7 +50,7 @@ document.getElementById('reset').addEventListener('click', event => {
 });
 
 document.addEventListener('player', event => {
-    event.preventDefault();
+    // event.preventDefault();
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
@@ -64,7 +64,7 @@ document.addEventListener('player', event => {
 });
 
 document.addEventListener('computer', event => {
-    event.preventDefault();
+    // event.preventDefault();
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
