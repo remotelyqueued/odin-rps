@@ -27,11 +27,14 @@
 -   branching - merging
 
 todo:
+https://github.com/airbnb/javascript#comments
 modal design
-airbnb style guide
 
-when results are displayed not shift text
-test loading
+updatemodal - submit: abrupt animation, fix leaves buttons inert
+inert buttons - text selection on other items when modal displays
+
+text output
+main
+text formating
 reset do something
-
-why need to use inert
+test loading

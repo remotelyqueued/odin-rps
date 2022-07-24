@@ -1,17 +1,12 @@
+/**
+ *
+ * @param {String} html parsed as HTML
+ * @param {HTMLDivElement} modal
+ * @param {HTMLDivElement} cover
+ */
 export function updateModal(html, modal, cover) {
+    // another method to do this
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-
-    // console.log(document.activeElement);
-
-    // const main = document.querySelector('main');
-    // const header = document.querySelector('header');
-    // const footer = document.querySelector('footer');
-
-    // function toggleInert() {
-    //     main.toggleAttribute('inert');
-    //     header.toggleAttribute('inert');
-    //     footer.toggleAttribute('inert');
-    // }
 
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
@@ -19,7 +14,8 @@ export function updateModal(html, modal, cover) {
     toggleHidden(cover, modal);
     toggleIn(cover, modal);
 
-    firstInput.focus(); // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
+    firstInput.focus();
     document.addEventListener('click', preventEscape);
 
     document.querySelector('pre').innerHTML = html;
@@ -29,23 +25,11 @@ export function updateModal(html, modal, cover) {
     form.addEventListener('keydown', keydown);
     form.cancel.addEventListener('click', cancel);
 
-    function toggleHidden(...elements) {
-        elements.forEach(element => element.classList.toggle('hidden'));
-    }
-
-    function toggleIn(...elements) {
-        elements.forEach(element => element.classList.toggle('in'));
-    }
-
-    function toggleOut(...elements) {
-        elements.forEach(element => element.classList.toggle('out'));
-    }
-
     function submit(event) {
+        event.preventDefault(); // todo: fixes abrubt animation, buttons are inert lol
+        modal.addEventListener('animationend', exit);
         toggleIn(modal, cover);
         toggleOut(modal, cover);
-
-        modal.addEventListener('animationend', exit);
     }
 
     // focus trap
@@ -70,13 +54,20 @@ export function updateModal(html, modal, cover) {
         }
     }
 
+    /**
+     * cancel() leaves the modal
+     * @param {Event} event
+     */
     function cancel(event) {
+        modal.addEventListener('animationend', exit);
         toggleIn(modal, cover);
         toggleOut(modal, cover);
-
-        modal.addEventListener('animationend', exit);
     }
 
+    /**
+     * @param {Event} event
+     * @returns {Boolean}
+     */
     function isEscape(event) {
         return (
             event.key === 'Escape' ||
@@ -85,12 +76,29 @@ export function updateModal(html, modal, cover) {
         );
     }
 
+    // --- helper functions ----------------------------------------------------
+    /**
+     *
+     * @param {Event} event
+     */
     function preventEscape(event) {
         firstInput.focus();
     }
 
     function isTab(event) {
         return event.key === 'Tab' || event.keyCode === 9;
+    }
+
+    function toggleHidden(...elements) {
+        elements.forEach(element => element.classList.toggle('hidden'));
+    }
+
+    function toggleIn(...elements) {
+        elements.forEach(element => element.classList.toggle('in'));
+    }
+
+    function toggleOut(...elements) {
+        elements.forEach(element => element.classList.toggle('out'));
     }
 
     function exit() {

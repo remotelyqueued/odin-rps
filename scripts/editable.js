@@ -1,4 +1,10 @@
-export function makeEditable(elem) {
-    elem.setAttribute('contenteditable', true);
-    elem.setAttribute('spellcheck', false);
+/**
+ * makeEditable(elem) makes the Array of elements editable
+ * @param {Array} elements expecting HTMLElements
+ */
+export function makeEditable(...elements) {
+    elements.forEach(element => {   
+        element.setAttribute('contenteditable', true);
+        element.setAttribute('spellcheck', false);
+    });
 }

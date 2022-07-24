@@ -1,3 +1,9 @@
+/**
+ * setThrottle() takes a function a limits the amount of times it can be called
+ * @param {Function} callback
+ * @param {Number} ms
+ * @returns {Function}
+ */
 export function setThrottle(callback, ms) {
     let isThrottled = false;
     let savedArgs;

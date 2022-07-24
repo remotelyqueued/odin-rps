@@ -24,10 +24,12 @@ const reset = () => {
     results.tie = 0;
 };
 
-makeEditable(document.querySelector('h1'));
-makeEditable(document.querySelector('footer'));
-makeEditable(document.getElementById('message'));
-makeEditable(pre);
+makeEditable(
+    document.querySelector('h1'),
+    document.querySelector('footer'),
+    document.getElementById('message'),
+    pre
+);
 
 pre.focus();
 
@@ -51,7 +53,6 @@ document.getElementById('reset').addEventListener('click', event => {
 });
 
 document.addEventListener('player', event => {
-    // event.preventDefault();
     pre.style.alignItems = 'flex-start';
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
@@ -72,7 +73,6 @@ document.addEventListener('player', event => {
 });
 
 document.addEventListener('computer', event => {
-    // event.preventDefault();
     pre.style.alignItems = 'flex-start';
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
