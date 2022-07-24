@@ -34,7 +34,7 @@ pre.focus();
 cover.classList.add('cover', 'hidden');
 document.body.append(cover);
 
-document.querySelectorAll('.front').forEach(button =>
+document.querySelectorAll('button').forEach(button =>
     button.addEventListener('pointerdown', event => {
         // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
         event.preventDefault();
@@ -56,8 +56,13 @@ document.addEventListener('player', event => {
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
+        document
+            .querySelectorAll('button')
+            .forEach(button => (button.inert = true));
+
         pre.style.alignItems = 'center';
         reset();
+
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
@@ -72,6 +77,10 @@ document.addEventListener('computer', event => {
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
+        document
+            .querySelectorAll('button')
+            .forEach(button => (button.inert = true));
+
         pre.style.alignItems = 'center';
         reset();
         updateModal(

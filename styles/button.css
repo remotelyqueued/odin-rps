@@ -5,6 +5,10 @@ button {
     font-family: 'pixelated_ms';
 }
 
+span {
+    pointer-events: none;
+}
+
 .pushable {
     position: relative;
     border: none;

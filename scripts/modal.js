@@ -16,7 +16,8 @@ export function updateModal(html, modal, cover) {
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
 
-    toggle(cover, modal);
+    toggleHidden(cover, modal);
+    toggleIn(cover, modal);
 
     firstInput.focus(); // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
     document.addEventListener('click', preventEscape);
@@ -28,13 +29,23 @@ export function updateModal(html, modal, cover) {
     form.addEventListener('keydown', keydown);
     form.cancel.addEventListener('click', cancel);
 
-    function toggle(...elements) {
+    function toggleHidden(...elements) {
         elements.forEach(element => element.classList.toggle('hidden'));
     }
 
+    function toggleIn(...elements) {
+        elements.forEach(element => element.classList.toggle('in'));
+    }
+
+    function toggleOut(...elements) {
+        elements.forEach(element => element.classList.toggle('out'));
+    }
+
     function submit(event) {
-        toggle(cover, modal);
-        removeEvents();
+        toggleIn(modal, cover);
+        toggleOut(modal, cover);
+
+        modal.addEventListener('animationend', exit);
     }
 
     // focus trap
@@ -60,8 +71,10 @@ export function updateModal(html, modal, cover) {
     }
 
     function cancel(event) {
-        toggle(cover, modal);
-        removeEvents();
+        toggleIn(modal, cover);
+        toggleOut(modal, cover);
+
+        modal.addEventListener('animationend', exit);
     }
 
     function isEscape(event) {
@@ -71,7 +84,7 @@ export function updateModal(html, modal, cover) {
             event.keyCode === 27
         );
     }
-    
+
     function preventEscape(event) {
         firstInput.focus();
     }
@@ -80,10 +93,18 @@ export function updateModal(html, modal, cover) {
         return event.key === 'Tab' || event.keyCode === 9;
     }
 
+    function exit() {
+        toggleOut(modal, cover);
+        removeEvents();
+        cover.classList.add('hidden');
+        modal.classList.add('hidden');
+    }
+
     function removeEvents() {
         form.removeEventListener('submit', submit);
         form.removeEventListener('keydown', keydown);
         form.cancel.removeEventListener('click', cancel);
         document.removeEventListener('click', preventEscape);
+        modal.removeEventListener('animationend', exit);
     }
 }
