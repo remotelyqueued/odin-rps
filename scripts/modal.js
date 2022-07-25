@@ -1,38 +1,46 @@
 /**
+ * updateModal() updates the modal with the winner of the 5 round game
  *
  * @param {String} html parsed as HTML
  * @param {HTMLDivElement} modal
  * @param {HTMLDivElement} cover
  */
 export function updateModal(html, modal, cover) {
-    // another method to do this
-    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
 
+    document.querySelector('pre').innerHTML = html;
+    document.getElementById('message').innerHTML = html;
+
+    removeOut(modal, cover);
     toggleHidden(cover, modal);
-    toggleIn(cover, modal);
+    setIn(cover, modal);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
     firstInput.focus();
-    document.addEventListener('click', preventEscape);
-
-    document.querySelector('pre').innerHTML = html;
-    document.getElementById('message').innerHTML = html;
 
     form.addEventListener('submit', submit);
     form.addEventListener('keydown', keydown);
     form.cancel.addEventListener('click', cancel);
 
     function submit(event) {
-        event.preventDefault(); // todo: fixes abrubt animation, buttons are inert lol
+        event.preventDefault();
         modal.addEventListener('animationend', exit);
-        toggleIn(modal, cover);
-        toggleOut(modal, cover);
+        removeIn(cover, modal);
+        setOut(modal, cover);
     }
 
-    // focus trap
+    function cancel(event) {
+        modal.addEventListener('animationend', exit);
+        removeIn(modal, cover);
+        setOut(modal, cover);
+    }
+
+    function exit() {
+        toggleHidden(modal, cover);
+        removeEvents();
+    }
+
     function keydown(event) {
         if (isEscape(event)) {
             cancel();
@@ -54,20 +62,6 @@ export function updateModal(html, modal, cover) {
         }
     }
 
-    /**
-     * cancel() leaves the modal
-     * @param {Event} event
-     */
-    function cancel(event) {
-        modal.addEventListener('animationend', exit);
-        toggleIn(modal, cover);
-        toggleOut(modal, cover);
-    }
-
-    /**
-     * @param {Event} event
-     * @returns {Boolean}
-     */
     function isEscape(event) {
         return (
             event.key === 'Escape' ||
@@ -76,13 +70,20 @@ export function updateModal(html, modal, cover) {
         );
     }
 
-    // --- helper functions ----------------------------------------------------
-    /**
-     *
-     * @param {Event} event
-     */
-    function preventEscape(event) {
-        firstInput.focus();
+    function removeOut(...elements) {
+        elements.forEach(element => element.classList.remove('out'));
+    }
+
+    function removeIn(...elements) {
+        elements.forEach(element => element.classList.remove('in'));
+    }
+
+    function setOut(...elements) {
+        elements.forEach(element => element.classList.add('out'));
+    }
+
+    function setIn(...elements) {
+        elements.forEach(element => element.classList.add('in'));
     }
 
     function isTab(event) {
@@ -93,26 +94,10 @@ export function updateModal(html, modal, cover) {
         elements.forEach(element => element.classList.toggle('hidden'));
     }
 
-    function toggleIn(...elements) {
-        elements.forEach(element => element.classList.toggle('in'));
-    }
-
-    function toggleOut(...elements) {
-        elements.forEach(element => element.classList.toggle('out'));
-    }
-
-    function exit() {
-        toggleOut(modal, cover);
-        removeEvents();
-        cover.classList.add('hidden');
-        modal.classList.add('hidden');
-    }
-
     function removeEvents() {
         form.removeEventListener('submit', submit);
         form.removeEventListener('keydown', keydown);
         form.cancel.removeEventListener('click', cancel);
-        document.removeEventListener('click', preventEscape);
         modal.removeEventListener('animationend', exit);
     }
 }

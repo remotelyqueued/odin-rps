@@ -57,13 +57,8 @@ document.addEventListener('player', event => {
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
-        document
-            .querySelectorAll('button')
-            .forEach(button => (button.inert = true));
-
         pre.style.alignItems = 'center';
         reset();
-
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
@@ -77,10 +72,6 @@ document.addEventListener('computer', event => {
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
-        document
-            .querySelectorAll('button')
-            .forEach(button => (button.inert = true));
-
         pre.style.alignItems = 'center';
         reset();
         updateModal(

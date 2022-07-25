@@ -1,6 +1,6 @@
 /**
  * game() plays a single round of rps
- * updates score object param and dispatches a custom event on button
+ * updates score object and dispatches a custom event on button
  * relies on event delegation in main to catch result
  * 
  * @param {HTMLButtonElement} button
@@ -15,6 +15,7 @@ export function game(button, event, results) {
 
 /**
  * playround() returns winner of a single round, or invalid, as string
+ * 
  * @param {String} playerSelection
  * @param {String} computerSelection
  * @return {String} 'computer', 'player', 'tie', 'invalid'
@@ -54,6 +55,7 @@ function playRound(playerSelection, computerSelection) {
 
 /**
  * computerPlay() makes the computers choice
+ * 
  * @return {String} 'rock', 'paper', 'scissors'
  */
 function computerPlay() {
@@ -62,11 +64,8 @@ function computerPlay() {
 
 /**
  * test() plays the game 30 million times
- * for each choice 'rock', 'paper', 'scissors' the game is played 10 million
- * times
- * 
- * todo: may pass responsibility of updating results to updateModal() or
- * return results to update in main
+ * for each choice 'rock', 'paper', 'scissors' 
+ * the game is played 10 million times
  */
 export function test() {
     const count = {
@@ -95,6 +94,7 @@ export function test() {
         winner = `${winner} won!!!`;
     }
 
+    // FIXME: format text another way - move update to modal
     document.querySelector('pre').innerHTML = `<span class="results">🏆</span>
 30 million games:
 player: ${count.player.toLocaleString()}

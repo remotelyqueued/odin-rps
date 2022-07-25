@@ -30,11 +30,11 @@ todo:
 https://github.com/airbnb/javascript#comments
 modal design
 
-updatemodal - submit: abrupt animation, fix leaves buttons inert
-inert buttons - text selection on other items when modal displays
+updatemodal - on animation click events still register
 
 text output
 main
+
 text formating
 reset do something
 test loading
