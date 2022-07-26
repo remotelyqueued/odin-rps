@@ -1,5 +1,7 @@
 /**
- * setThrottle() takes a function a limits the amount of times it can be called
+ * setThrottle() takes a function and returns a wrapper that throttles
+ * calls to the function
+ * 
  * @param {Function} callback
  * @param {Number} ms
  * @returns {Function}

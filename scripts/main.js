@@ -7,10 +7,16 @@ import { game, test } from './game.js';
 const throttleGame = setThrottle(game, 100);
 const throttleTest = setThrottle(test, 5000);
 
-const modal = document.getElementById('modal');
-const pre = document.querySelector('pre');
+const main = document.body.querySelector('main');
+const header = document.body.querySelector('header');
+const footer = document.body.querySelector('footer');
 
+const modal = document.getElementById('modal');
 const cover = document.createElement('div');
+cover.classList.add('cover', 'hidden');
+document.body.append(cover);
+
+const pre = document.querySelector('pre');
 
 const results = {
     computer: 0,
@@ -30,11 +36,6 @@ makeEditable(
     document.getElementById('message'),
     pre
 );
-
-pre.focus();
-
-cover.classList.add('cover', 'hidden');
-document.body.append(cover);
 
 document.querySelectorAll('button').forEach(button =>
     button.addEventListener('pointerdown', event => {
@@ -57,12 +58,14 @@ document.addEventListener('player', event => {
     pre.innerHTML =
         'Player won that round!<br />' + JSON.stringify(results, null, 2);
     if (results.player >= 5) {
-        pre.style.alignItems = 'center';
+        toggleInert();
         reset();
+        pre.style.alignItems = 'center';
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
-            cover
+            cover,
+            toggleInert
         );
     }
 });
@@ -72,12 +75,14 @@ document.addEventListener('computer', event => {
     pre.innerHTML =
         'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
     if (results.computer >= 5) {
+        toggleInert();
         pre.style.alignItems = 'center';
         reset();
         updateModal(
             '<span class="results">😭</span><br/>You lost!',
             modal,
-            cover
+            cover,
+            toggleInert
         );
     }
 });
@@ -86,3 +91,9 @@ document.addEventListener('tie', event => {
     pre.style.alignItems = 'flex-start';
     pre.innerHTML = 'Tie game!<br />' + JSON.stringify(results, null, 2);
 });
+
+function toggleInert() {
+    main.toggleAttribute('inert');
+    header.toggleAttribute('inert');
+    footer.toggleAttribute('inert');
+}

@@ -1,8 +1,7 @@
 /**
  * game() plays a single round of rps
  * updates score object and dispatches a custom event on button
- * relies on event delegation in main to catch result
- * 
+ *
  * @param {HTMLButtonElement} button
  * @param {PointerEvent} event
  * @param {Object} results
@@ -10,12 +9,19 @@
 export function game(button, event, results) {
     const outcome = playRound(event.target.textContent, computerPlay());
     results[outcome]++;
-    button.dispatchEvent(new CustomEvent(`${outcome}`, { bubbles: true }));
+    button.dispatchEvent(
+        new CustomEvent(`${outcome}`, {
+            bubbles: true,
+            detail: {
+                winner: outcome,
+            },
+        })
+    );
 }
 
 /**
  * playround() returns winner of a single round, or invalid, as string
- * 
+ *
  * @param {String} playerSelection
  * @param {String} computerSelection
  * @return {String} 'computer', 'player', 'tie', 'invalid'
@@ -55,7 +61,7 @@ function playRound(playerSelection, computerSelection) {
 
 /**
  * computerPlay() makes the computers choice
- * 
+ *
  * @return {String} 'rock', 'paper', 'scissors'
  */
 function computerPlay() {
@@ -64,7 +70,7 @@ function computerPlay() {
 
 /**
  * test() plays the game 30 million times
- * for each choice 'rock', 'paper', 'scissors' 
+ * for each choice 'rock', 'paper', 'scissors'
  * the game is played 10 million times
  */
 export function test() {

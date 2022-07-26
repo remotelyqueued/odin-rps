@@ -1,5 +1,9 @@
 /* source: https://www.joshwcomeau.com/animation/3d-button/  */
 
+.no-event {
+    pointer-events: none;
+}
+
 button {
     flex: 1;
     font-family: 'pixelated_ms';

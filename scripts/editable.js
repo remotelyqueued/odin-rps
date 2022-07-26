@@ -1,6 +1,7 @@
 /**
  * makeEditable(elem) makes the Array of elements editable
- * @param {Array} elements expecting HTMLElements
+ * 
+ * @param {Array} elements HTMLElements
  */
 export function makeEditable(...elements) {
     elements.forEach(element => {   

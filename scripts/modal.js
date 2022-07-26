@@ -5,7 +5,7 @@
  * @param {HTMLDivElement} modal
  * @param {HTMLDivElement} cover
  */
-export function updateModal(html, modal, cover) {
+export function updateModal(html, modal, cover, callback) {
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
 
@@ -38,6 +38,8 @@ export function updateModal(html, modal, cover) {
 
     function exit() {
         toggleHidden(modal, cover);
+        removeOut(modal, cover);
+        callback();
         removeEvents();
     }
 
@@ -62,12 +64,8 @@ export function updateModal(html, modal, cover) {
         }
     }
 
-    function isEscape(event) {
-        return (
-            event.key === 'Escape' ||
-            event.key === 'Esc' ||
-            event.keyCode === 27
-        );
+    function toggleHidden(...elements) {
+        elements.forEach(element => element.classList.toggle('hidden'));
     }
 
     function removeOut(...elements) {
@@ -90,8 +88,12 @@ export function updateModal(html, modal, cover) {
         return event.key === 'Tab' || event.keyCode === 9;
     }
 
-    function toggleHidden(...elements) {
-        elements.forEach(element => element.classList.toggle('hidden'));
+    function isEscape(event) {
+        return (
+            event.key === 'Escape' ||
+            event.key === 'Esc' ||
+            event.keyCode === 27
+        );
     }
 
     function removeEvents() {
