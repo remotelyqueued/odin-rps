@@ -12,9 +12,8 @@ export function updateModal(html, modal, cover, callback) {
     document.querySelector('pre').innerHTML = html;
     document.getElementById('message').innerHTML = html;
 
-    removeOut(modal, cover);
-    toggleHidden(cover, modal);
-    setIn(cover, modal);
+    toggleClass('hidden', cover, modal);
+    addClass('in', cover, modal);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
     firstInput.focus();
@@ -26,21 +25,20 @@ export function updateModal(html, modal, cover, callback) {
     function submit(event) {
         event.preventDefault();
         modal.addEventListener('animationend', exit);
-        removeIn(cover, modal);
-        setOut(modal, cover);
+        addClass('out', modal, cover);
     }
 
     function cancel(event) {
         modal.addEventListener('animationend', exit);
-        removeIn(modal, cover);
-        setOut(modal, cover);
+        addClass('out', modal, cover);
     }
 
     function exit() {
-        toggleHidden(modal, cover);
-        removeOut(modal, cover);
-        callback();
+        toggleClass('hidden', modal, cover);
+        removeClass('in', modal, cover);
+        removeClass('out', modal, cover);
         removeEvents();
+        callback();
     }
 
     function keydown(event) {
@@ -64,24 +62,16 @@ export function updateModal(html, modal, cover, callback) {
         }
     }
 
-    function toggleHidden(...elements) {
-        elements.forEach(element => element.classList.toggle('hidden'));
+    function toggleClass(className, ...elements) {
+        elements.forEach(element => element.classList.toggle(className));
     }
 
-    function removeOut(...elements) {
-        elements.forEach(element => element.classList.remove('out'));
+    function removeClass(className, ...elements) {
+        elements.forEach(element => element.classList.remove(className));
     }
 
-    function removeIn(...elements) {
-        elements.forEach(element => element.classList.remove('in'));
-    }
-
-    function setOut(...elements) {
-        elements.forEach(element => element.classList.add('out'));
-    }
-
-    function setIn(...elements) {
-        elements.forEach(element => element.classList.add('in'));
+    function addClass(className, ...elements) {
+        elements.forEach(element => element.classList.add(className));
     }
 
     function isTab(event) {

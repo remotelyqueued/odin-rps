@@ -2,8 +2,8 @@
  * setThrottle() takes a function and returns a wrapper that throttles
  * calls to the function
  * 
- * @param {Function} callback
- * @param {Number} ms
+ * @param {Function} callback function that is wrapped and returned
+ * @param {Number} ms time in milliseconds
  * @returns {Function}
  */
 export function setThrottle(callback, ms) {
