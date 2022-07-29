@@ -4,68 +4,70 @@ import { makeEditable } from './editable.js';
 import { updateModal } from './modal.js';
 import { game, test } from './game.js';
 
-const throttleGame = setThrottle(game, 100);
-const throttleTest = setThrottle(test, 5000);
+const throttleGame = setThrottle(game, 400);
+const throttleTest = setThrottle(test, 2000);
 
 const main = document.body.querySelector('main');
 const header = document.body.querySelector('header');
 const footer = document.body.querySelector('footer');
 
+const h1 = document.body.querySelector('h1');
+const pre = document.getElementById('pre');
+
 const modal = document.getElementById('modal');
+const message = document.getElementById('message');
 const cover = document.createElement('div');
+
 cover.classList.add('cover', 'hidden');
+
 document.body.append(cover);
 
-const pre = document.querySelector('pre');
-
 const results = {
-    computer: 0,
     player: 0,
+    computer: 0,
     tie: 0,
 };
 
 const reset = () => {
+    pre.style.alignItems = 'center';
+    pre.innerText = 'results';
     results.computer = 0;
     results.player = 0;
     results.tie = 0;
 };
 
-makeEditable(
-    document.querySelector('h1'),
-    document.querySelector('footer'),
-    document.getElementById('message'),
-    pre
-);
+function toggleInert() {
+    main.toggleAttribute('inert');
+    header.toggleAttribute('inert');
+    footer.toggleAttribute('inert');
+}
+
+makeEditable(h1, footer, message, pre);
 
 document.querySelectorAll('button').forEach(button =>
     button.addEventListener('pointerdown', event => {
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#notes
         event.preventDefault();
         throttleGame(button, event, results);
     })
 );
 
-document.getElementById('test').addEventListener('click', event => {
-    throttleTest();
-});
-
-document.getElementById('reset').addEventListener('click', event => {
-    reset();
-});
-
 document.addEventListener('player', event => {
     pre.style.alignItems = 'flex-start';
     pre.innerHTML =
-        'Player won that round!<br />' + JSON.stringify(results, null, 2);
+        'Player won that round!<br />' +
+        JSON.stringify(results, null, 2) +
+        '<br />' +
+        JSON.stringify(event.detail, null, 2);
+
     if (results.player >= 5) {
         toggleInert();
-        reset();
-        pre.style.alignItems = 'center';
+
         updateModal(
             '<span class="results">🤯</span><br/>You won!',
             modal,
             cover,
-            toggleInert
+            toggleInert,
+            reset
         );
     }
 });
@@ -73,27 +75,45 @@ document.addEventListener('player', event => {
 document.addEventListener('computer', event => {
     pre.style.alignItems = 'flex-start';
     pre.innerHTML =
-        'Computer won! So strong!<br />' + JSON.stringify(results, null, 2);
+        'Close game but computer won!<br />' +
+        JSON.stringify(results, null, 2) +
+        '<br />' +
+        JSON.stringify(event.detail, null, 2);
+
     if (results.computer >= 5) {
         toggleInert();
-        pre.style.alignItems = 'center';
-        reset();
+
         updateModal(
             '<span class="results">😭</span><br/>You lost!',
             modal,
             cover,
-            toggleInert
+            toggleInert,
+            reset
         );
     }
 });
 
 document.addEventListener('tie', event => {
     pre.style.alignItems = 'flex-start';
-    pre.innerHTML = 'Tie game!<br />' + JSON.stringify(results, null, 2);
+    pre.innerHTML =
+        'Tie game!<br />' +
+        JSON.stringify(results, null, 2) +
+        '<br />' +
+        JSON.stringify(event.detail, null, 2);
 });
 
-function toggleInert() {
-    main.toggleAttribute('inert');
-    header.toggleAttribute('inert');
-    footer.toggleAttribute('inert');
-}
+document.getElementById('test').addEventListener('click', event => {
+    let results = throttleTest();
+    pre.style.alignItems = 'center';
+    pre.innerHTML = `
+<span class="results">🏆</span>
+30 million games:
+player: ${results.player.toLocaleString()}
+computer: ${results.computer.toLocaleString()}
+tie: ${results.tie.toLocaleString()}
+<strong>${results.winner} won!!</strong>`;
+});
+
+document.getElementById('reset').addEventListener('click', event => {
+    reset();
+});

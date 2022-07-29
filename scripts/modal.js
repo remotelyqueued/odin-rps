@@ -1,15 +1,14 @@
 /**
- * updateModal() updates the modal with the winner of the 5 round game
+ * updateModal() updates and shows the modal with the winner of the 5 round game
  *
  * @param {String} html parsed as HTML
  * @param {HTMLDivElement} modal
  * @param {HTMLDivElement} cover
  */
-export function updateModal(html, modal, cover, callback) {
+export function updateModal(html, modal, cover, ...callbacks) {
     const form = document.forms.form;
     const [firstInput, secondInput] = form.elements;
 
-    document.querySelector('pre').innerHTML = html;
     document.getElementById('message').innerHTML = html;
 
     toggleClass('hidden', cover, modal);
@@ -22,6 +21,7 @@ export function updateModal(html, modal, cover, callback) {
     form.addEventListener('keydown', keydown);
     form.cancel.addEventListener('click', cancel);
 
+    // event listeners
     function submit(event) {
         event.preventDefault();
         modal.addEventListener('animationend', exit);
@@ -33,12 +33,15 @@ export function updateModal(html, modal, cover, callback) {
         addClass('out', modal, cover);
     }
 
-    function exit() {
+    function exit(event) {
         toggleClass('hidden', modal, cover);
         removeClass('in', modal, cover);
         removeClass('out', modal, cover);
         removeEvents();
-        callback();
+
+        callbacks.forEach(callback => {
+            callback();
+        });
     }
 
     function keydown(event) {
@@ -62,27 +65,28 @@ export function updateModal(html, modal, cover, callback) {
         }
     }
 
-    function toggleClass(className, ...elements) {
-        elements.forEach(element => element.classList.toggle(className));
+    // helper functions
+    function addClass(className, ...elements) {
+        elements.forEach(element => element.classList.add(className));
     }
 
     function removeClass(className, ...elements) {
         elements.forEach(element => element.classList.remove(className));
     }
 
-    function addClass(className, ...elements) {
-        elements.forEach(element => element.classList.add(className));
+    function toggleClass(className, ...elements) {
+        elements.forEach(element => element.classList.toggle(className));
     }
 
-    function isTab(event) {
-        return event.key === 'Tab' || event.keyCode === 9;
+    function isTab(eventObject) {
+        return eventObject.key === 'Tab' || eventObject.keyCode === 9;
     }
 
-    function isEscape(event) {
+    function isEscape(eventObject) {
         return (
-            event.key === 'Escape' ||
-            event.key === 'Esc' ||
-            event.keyCode === 27
+            eventObject.key === 'Escape' ||
+            eventObject.key === 'Esc' ||
+            eventObject.keyCode === 27
         );
     }
 

@@ -7,17 +7,21 @@
  * @param {Object} results
  */
 export function game(button, event, results) {
-    const outcome = playRound(event.target.textContent, computerPlay());
+    const computerChoice = computerPlay();
+    const playerChoice = event.target.textContent.trim();
+    const outcome = playRound(playerChoice, computerChoice);
     results[outcome]++;
     button.dispatchEvent(
         new CustomEvent(`${outcome}`, {
             bubbles: true,
             detail: {
+                player: playerChoice,
+                computer: computerChoice,
                 winner: outcome,
             },
         })
     );
-}
+ }
 
 /**
  * playround() returns winner of a single round, or invalid, as string
@@ -27,7 +31,7 @@ export function game(button, event, results) {
  * @return {String} 'computer', 'player', 'tie', 'invalid'
  */
 function playRound(playerSelection, computerSelection) {
-    switch (playerSelection.trim().toLowerCase()) {
+    switch (playerSelection.toLowerCase()) {
         case 'rock':
             switch (computerSelection) {
                 case 'rock':
@@ -72,6 +76,8 @@ function computerPlay() {
  * test() plays the game 30 million times
  * for each choice 'rock', 'paper', 'scissors'
  * the game is played 10 million times
+ * 
+ * @return {Object} the results of the 30 million plays
  */
 export function test() {
     const count = {
@@ -92,19 +98,7 @@ export function test() {
     // Object.values iterates over all ennumerable properties
     let highScore = Math.max(...Object.values(count));
 
-    let winner = Object.keys(count).find(key => count[key] === highScore);
+    count.winner = Object.keys(count).find(key => count[key] === highScore);
 
-    if (winner === 'tie') {
-        winner = `${winner} won!...wait wut`;
-    } else {
-        winner = `${winner} won!!!`;
-    }
-
-    // FIXME: format text another way - move update to modal
-    document.querySelector('pre').innerHTML = `<span class="results">🏆</span>
-30 million games:
-player: ${count.player.toLocaleString()}
-computer: ${count.computer.toLocaleString()}
-tie: ${count.tie.toLocaleString()}
-<strong>${winner}</strong>`;
+    return count;
 }
